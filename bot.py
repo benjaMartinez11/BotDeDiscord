@@ -1,18 +1,21 @@
 import discord
-from discord.ext import commands
-
+import os
+from dotenv import load_dotenv
+# Cargar variables de entornoload_dotenv()
+TOKEN = os.getenv('DISCORD_TOKEN')
+# Crear cliente
 intents = discord.Intents.default()
-intents.message_content = True  # Habilita la lectura del contenido de mensajes
 
-bot = commands.Bot(command_prefix='!', intents=intents)
-
-@bot.event
+intents.message_content = True
+client = discord.Client(intents=intents)
+@client.event
 async def on_ready():
-    print(f'Bot conectado como {bot.user}')
+    print(f'✅ Bot conectado como {client.user}')
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return    
+    if message.content.lower() == '!hola':
+        await message.channel.send('¡Hola! Soy un bot hecho en Python. 🤖')
 
-@bot.command()
-async def hola(ctx):
-    await ctx.send(f'¡Hola {ctx.author.name}! ¿Cómo estás?')
-
-# Reemplazá "TU_TOKEN_AQUÍ" con el token real de tu bot
-bot.run('token')
+client.run(TOKEN)
