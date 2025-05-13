@@ -2,7 +2,7 @@ import discord
 import os
 import random
 
-TOKEN = ('tokenn')
+TOKEN = ('aca esta va el tokenn')
 
 intents = discord.Intents.default()
 intents.message_content = True
